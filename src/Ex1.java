@@ -166,9 +166,26 @@ public class Ex1 {
 	 */
 	public static double sameValue(double[] p1, double[] p2, double x1, double x2, double eps) {
 		double ans = x1;
-        /** add you code below
 
-         /////////////////// */
+		double a = x1;
+		double b = x2;
+		double fa = f(p1, a) - f(p2, a);
+		double fb = f(p1, b) - f(p2, b);
+
+		while ((b - a) > EPS) {
+			double mid = (a + b) / 2.0;
+			double fm = f(p1, mid) - f(p2, mid);
+			ans = mid;
+
+			if (fa * fm <= 0) {
+				b = mid;
+				fb = fm;
+			}
+			else {
+				a = mid;
+				fa = fm;
+			}
+		}
 		return ans;
 	}
 	/**

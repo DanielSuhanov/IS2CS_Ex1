@@ -101,9 +101,14 @@ public class Ex1 {
 	 */
 	public static boolean equals(double[] p1, double[] p2) {
 		boolean ans = true;
-        /** add you code below
-
-         /////////////////// */
+        if (p1 == null) p1 = ZERO;
+		if (p2 == null) p2 = ZERO;
+		int d1 = -1;
+		for (int i = p1.length - 1; i >= 0; i--) {
+			if (Math.abs(p1[i]) > EPS && d1 == -1) {
+				d1 = i;
+			}
+		}
 		return ans;
 	}
 

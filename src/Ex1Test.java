@@ -258,5 +258,16 @@ class Ex1Test {
 		double[] expected = {0, 0, 1};
 		assertTrue(Ex1.equals(p, expected));
 	}
+
+	@Test
+	void testLength() {
+		double[] pConst = {5};
+		double lenConst = Ex1.length(pConst, 0, 10, 10);
+		assertEquals(10.0, lenConst, Ex1.EPS);
+		double[] pLinear = {0, 1};
+		double lenLinear = Ex1.length(pLinear, 0, 3, 100);
+		double expected = Math.sqrt(18);
+		assertEquals(expected, lenLinear, Ex1.EPS);
+	}
 }
 

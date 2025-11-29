@@ -369,7 +369,7 @@ public class Ex1 {
 	if (p1 == null || p2 == null || p1.length == 0 || p2.length == 0) {
 		return ZERO;
 	}
-	boolean zero1 = true;
+	        boolean zero1 = true;
 			boolean zero2 = true;
 			for (int i = 0; i < p1.length; i++) {
 				if (Math.abs(p1[i]) >= EPS) {
@@ -392,7 +392,7 @@ public class Ex1 {
 
 		for (int i = 0; i < len1; i++) {
 			for (int j = 0; j < len2; j++) {
-				ans[i + j] = p1[i] * p2[j];
+				ans[i + j] += p1[i] * p2[j];
 			}
 		}
 		int last = ans.length - 1;

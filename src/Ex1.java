@@ -414,10 +414,27 @@ public class Ex1 {
 	 * @return
 	 */
 	public static double[] derivative (double[] po) {
-		double [] ans = ZERO;//
-        /** add you code below
+		double[] ans = ZERO;//
+		if (po == null || po.length <= 1)
+			return ZERO;
 
-         /////////////////// */
+		ans = new double[po.length - 1];
+		for (int i = 1; i < po.length; i++) {
+			ans[i - 1] = po[i] * i;
+		}
+		int last = ans.length - 1;
+		while (last >= 0 && Math.abs(ans[last]) < EPS) {
+			last--;
+		}
+		if (last < 0) {
+			return ZERO;
+		}
+		if (last < ans.length - 1) {
+			double[] trimmed = new double[last + 1];
+			for (int i = 0; i <= last; i++) {
+				trimmed[i] = ans[i];
+			}
+		}
 		return ans;
 	}
 }

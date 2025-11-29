@@ -260,10 +260,48 @@ public class Ex1 {
 	 * @return
 	 */
 	public static double[] getPolynomFromString(String p) {
-		double [] ans = ZERO;//  -1.0x^2 +3.0x +2.0
-        /** add you code below
+		double[] ans = ZERO;//  -1.0x^2 +3.0x +2.0
 
-         /////////////////// */
+		if (p == null)
+			return ZERO;
+
+		String s = p.replace(" ", "").toLowerCase();
+		if (s.equals("0") || s.equals("0.0")) {
+			return ZERO;
+		}
+			s = s.replace("-", "+-");
+		if (s.startsWith("+")) {
+			s = s.substring(1);
+
+			String[] terms = s.split("\\+");
+
+			int maxPower = 0;
+			for (String term : terms) {
+				if (term.isEmpty())
+					continue;
+
+				int power;
+				int xIndex = term.indexOf('x');
+				if (xIndex == -1) {
+					power = 0;
+				}
+				else {
+					int powIndex = term.indexOf('^');
+					if (powIndex == -1) {
+						power = 1;
+					}
+					else {
+						String powerStr = term.substring(powIndex + 1);
+						power = Integer.parseInt(powerStr);
+					}
+				}
+				if (power > maxPower) {
+					maxPower = power;
+				}
+			}
+		}
+
+
 		return ans;
 	}
 	/**

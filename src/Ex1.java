@@ -117,25 +117,31 @@ public class Ex1 {
 	 * @return true iff p1 represents the same polynomial function as p2.
 	 */
 	public static boolean equals(double[] p1, double[] p2) {
-		boolean ans = true;
 		if (p1 == null) p1 = ZERO;
 		if (p2 == null) p2 = ZERO;
-		int d1 = -1;
-		for (int i = p1.length - 1; i >= 0; i--) {
-			if (Math.abs(p1[i]) > EPS && d1 == -1) {
-				d1 = i;
-			}
-		}
-		int d2 = -1;
-		for (int i = p2.length - 1; i >= 0; i--) {
-			if (Math.abs(p2[i]) > EPS && d2 == -1) {
-				d2 = i;
-			}
-		}
+		boolean ans = true;
 
+		int last1 = p1.length - 1;
+		while (last1 > 0 && Math.abs(p1[last1]) == 0.0) {
+			last1--;
+		}
+		int last2 = p2.length - 1;
+		while (last2 > 0 && Math.abs(p2[last2]) == 0.0) {
+			last2--;
+		}
+		int n = Math.max(last1, last2);
+		for (int i = 0; i <= n; i++) {
+			double x = i;
+			double y1 = f(p1, x);
+			double y2 = f(p2, x);
+			double diff = Math.abs(y1 - y2);
+			if (diff > EPS) {
+				ans = false;
+				break;
+			}
+		}
 		return ans;
 	}
-
 	/**
 	 * Computes a String representing the polynomial function.
 	 * For example the array {2,0,3.1,-1.2} will be presented as the following String  "-1.2x^3 +3.1x^2 +2.0"

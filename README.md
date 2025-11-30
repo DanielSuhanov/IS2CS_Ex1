@@ -11,12 +11,12 @@
 This exercise focuses on implementing numerical and algebraic operations on polynomial functions represented as arrays of doubles.  
 For example, the array:
 
-{0.1, 0, -3, 0.2}
+**{0.1, 0, -3, 0.2}**
 
 
 represents the polynomial:
 
-0.2x^3 - 3x^2 + 0.1
+**0.2x^3 - 3x^2 + 0.1**
 
 
 The assignment includes:

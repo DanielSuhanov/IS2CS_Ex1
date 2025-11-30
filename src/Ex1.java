@@ -142,6 +142,7 @@ public class Ex1 {
 		}
 		return ans;
 	}
+
 	/**
 	 * Computes a String representing the polynomial function.
 	 * For example the array {2,0,3.1,-1.2} will be presented as the following String  "-1.2x^3 +3.1x^2 +2.0"
@@ -289,46 +290,86 @@ public class Ex1 {
 	 * @return
 	 */
 	public static double[] getPolynomFromString(String p) {
-		double[] ans = ZERO;//  -1.0x^2 +3.0x +2.0
-
-		if (p == null)
-			return ZERO;
-
-		String s = p.replace(" ", "").toLowerCase();
-		if (s.equals("0") || s.equals("0.0")) {
+		if (p == null) {
 			return ZERO;
 		}
-		s = s.replace("-", "+-");
-		if (s.startsWith("+")) {
-			s = s.substring(1);
+		String s = p.replace(" ", "").toLowerCase();
+		if (s.length() == 0 || s.equals("0.0") || s.equals("0")) {
+			return ZERO;
+		}
+		if (s.charAt(0) != '+' && s.charAt(0) != '-') {
+			s = "+" + s;
+		}
+		String[] terms = s.split("(?=[+-])");
+		int maxPower = 0;
+		for (String term : terms) {
+			if (term == null || term.isEmpty()) {
+				continue;
+			}
+			String body = term.substring(1);
+			int power;
 
-			String[] terms = s.split("\\+");
-
-			int maxPower = 0;
-			for (String term : terms) {
-				if (term.isEmpty())
-					continue;
-
-				int power;
-				int xIndex = term.indexOf('x');
-				if (xIndex == -1) {
-					power = 0;
+			if (body.contains("x")) {
+				if (body.contains("^")) {
+					int idx = body.indexOf('^');
+					String powStr = body.substring(idx + 1);
+					power = Integer.parseInt(powStr);
 				} else {
-					int powIndex = term.indexOf('^');
-					if (powIndex == -1) {
-						power = 1;
-					} else {
-						String powerStr = term.substring(powIndex + 1);
-						power = Integer.parseInt(powerStr);
-					}
+					power = 1;
 				}
-				if (power > maxPower) {
-					maxPower = power;
-				}
+			} else {
+				power = 0;
+			}
+			if (power > maxPower) {
+				maxPower = power;
 			}
 		}
+		double[] ans = new double[maxPower + 1];
+		for (String term : terms) {
+			if (term == null || term.isEmpty()) {
+				continue;
+			}
+			char signChar = term.charAt(0);
+			int sign = (signChar == '-') ? -1 : 1;
+			String body = term.substring(1);
 
+			int power;
+			double coef;
 
+			if (body.contains("x")) {
+				int xIndex = body.indexOf('x');
+				String coefPart = body.substring(0, xIndex);
+
+				if (coefPart.equals("") || coefPart.equals("+")) {
+					coef = 1.0;
+				} else if (coefPart.equals("-")) {
+					coef = -1.0;
+				} else {
+					coef = Double.parseDouble(coefPart);
+				}
+
+				if (body.contains("^")) {
+					int idx = body.indexOf('^');
+					String powStr = body.substring(idx + 1);
+					power = Integer.parseInt(powStr);
+				} else {
+					power = 1;
+				}
+			} else {
+				coef = Double.parseDouble(body);
+				power = 0;
+			}
+			coef *= sign;
+			ans[power] += coef;
+		}
+		boolean allZero = true;
+		for (double v : ans) {
+			if (Math.abs(v) > EPS) {
+				allZero = false;
+				break;
+			}
+		}
+		if (allZero) return ZERO;
 		return ans;
 	}
 
